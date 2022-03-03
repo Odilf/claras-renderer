@@ -1,0 +1,12 @@
+[package]
+name = "claras-renderer"
+version = "0.1.0"
+authors = ["Odilf"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+nannou = "0.18.1"
+gltf = "1.0"
+nalgebra = "0.30.1"
