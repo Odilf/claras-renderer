@@ -24,6 +24,15 @@ struct Transform {
 	position: Vector3<f64>,
 }
 
+impl Transform {
+	fn default() -> Transform {
+		Transform {
+			direction: Direction::Linear(vector![1.0, 0.0, 0.0]),
+			position: vector![0.0, 0.0, 0.0],
+		}
+	}
+}
+
 trait Directable {
 	fn normal(&self) -> Vector3<f64>;
 }
@@ -64,7 +73,7 @@ struct Base {
 
 #[derive(Debug)]
 pub struct Camera {
-	pub transform: Transform,
+	transform: Transform,
 	screen_base: Option<Base>,
 }
 
@@ -73,7 +82,14 @@ impl Directable for Camera {
 }
 
 impl Camera {
-	fn projection_distance(&self, vector: &Vector3<f64>) -> f64 {
+	pub fn default() -> Self {
+		Camera {
+			transform: Transform::default(),
+			screen_base: None,
+		}
+	}
+
+	pub fn projection_distance(&self, vector: &Vector3<f64>) -> f64 {
 		let n = self.transform.normal();
 		let p = self.transform.position;
 
@@ -117,8 +133,8 @@ impl Camera {
 		vector![x, y]
 	}
 
-	fn get_screen_base(&self) {
-		let screen_base: Vec<Vector2<f64>> = Vec::with_capacity(3);
+	fn get_screen_base(&mut self) {
+		let mut screen_base: Vec<Vector2<f64>> = Vec::with_capacity(3);
 
 		let j = Camera::screen_j(&self.normal());
 		let i = Camera::screen_i(&self.normal(), &j);
